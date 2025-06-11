@@ -129,9 +129,9 @@ const CreateExam: React.FC = () => {
     if (examData.timeLimit < 1) {
       validationErrors.push('Time limit must be at least 1 minute');
     }
-    if (!examData.password.trim()) {
-      validationErrors.push('Exam password is required');
-    }
+    // if (!examData.password.trim()) {
+    //   validationErrors.push('Exam password is required');
+    // }
 
     // Validate questions
     questions.forEach((question, qIndex) => {
@@ -212,7 +212,8 @@ const CreateExam: React.FC = () => {
           
           <FileUpload
             onQuestionsExtracted={handleQuestionsExtracted}
-            onClose={() => setShowFileUpload(false)} data-id="sd4tbc71z" data-path="src/pages/admin/CreateExam.tsx" />
+            onClose={() => setShowFileUpload(false)} data-id="sd4tbc71z" data-path="src/pages/admin/CreateExam.tsx" 
+          />
 
         </div>
       </Layout>);
@@ -286,17 +287,18 @@ const CreateExam: React.FC = () => {
                 </div>
               </div>
               <div className="space-y-2" data-id="g7i9wd9da" data-path="src/pages/admin/CreateExam.tsx">
-                <Label htmlFor="password" data-id="ylxfgw4k3" data-path="src/pages/admin/CreateExam.tsx">Access Password *</Label>
+                <Label htmlFor="password" data-id="ylxfgw4k3" data-path="src/pages/admin/CreateExam.tsx">Access Password</Label>
                 <Input
                   id="password"
                   type="text"
                   placeholder="Enter exam access password"
                   value={examData.password}
                   onChange={(e) => handleExamDataChange('password', e.target.value)}
-                  required data-id="o4y6lrzkc" data-path="src/pages/admin/CreateExam.tsx" />
+                  // required data-id="o4y6lrzkc" data-path="src/pages/admin/CreateExam.tsx" 
+                  />
 
                 <p className="text-sm text-gray-500" data-id="vfyibfpp1" data-path="src/pages/admin/CreateExam.tsx">
-                  Students will need this password to start the exam
+                  Students will need this password to start the exam. Leave it blank to allow open access.
                 </p>
               </div>
             </CardContent>

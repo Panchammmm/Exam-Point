@@ -32,7 +32,7 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4" data-id="po7l6dc6e" data-path="src/App.tsx">
       <div className="text-center max-w-md" data-id="mm0q9gy5e" data-path="src/App.tsx">
         <div className="mb-8" data-id="fdwb56im5" data-path="src/App.tsx">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4" data-id="3y8j2q0gh" data-path="src/App.tsx">ExamPortal</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4" data-id="3y8j2q0gh" data-path="src/App.tsx">Exam Point</h1>
           <p className="text-xl text-gray-600 mb-8" data-id="8tdh6dy6f" data-path="src/App.tsx">
             A comprehensive online examination platform for students and educators
           </p>

@@ -42,7 +42,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Logo */}
             <Link to={user?.role === 'admin' ? '/admin' : '/dashboard'} className="flex items-center space-x-2" data-id="uw1nxeuij" data-path="src/components/Layout.tsx">
               <BookOpen className="w-8 h-8 text-indigo-600" data-id="d8h0kioay" data-path="src/components/Layout.tsx" />
-              <span className="text-xl font-bold text-gray-900" data-id="1j9ri4k4s" data-path="src/components/Layout.tsx">ExamPortal</span>
+              <span className="text-xl font-bold text-gray-900" data-id="1j9ri4k4s" data-path="src/components/Layout.tsx">Exam Point</span>
             </Link>
 
             {/* Navigation Links */}
