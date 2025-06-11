@@ -1,4 +1,4 @@
-# Welcome to your EzSite project
+# Welcome to your Exam Point
 
 A clean, modern React template with TypeScript, Vite, TailwindCSS, and ShadCN UI components. This template provides a solid foundation for building web applications with best practices in mind.
 
@@ -25,8 +25,8 @@ A clean, modern React template with TypeScript, Vite, TailwindCSS, and ShadCN UI
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/your-username/react-template-project.git
-cd react-template-project
+git clone https://github.com/your-username/this-repo-name.git
+cd this-repo-name
 ```
 
 2. Install dependencies:

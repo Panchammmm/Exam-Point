@@ -2,7 +2,7 @@
 import { Exam, CreateExamData, Question, ExamSubmission } from '@/types';
 
 // Mock exam data
-let mockExams: Exam[] = [
+const mockExams: Exam[] = [
 {
   id: '1',
   title: 'JavaScript Fundamentals',
@@ -58,7 +58,7 @@ let mockExams: Exam[] = [
 
 
 // Mock submissions data
-let mockSubmissions: ExamSubmission[] = [
+const mockSubmissions: ExamSubmission[] = [
 {
   id: '1',
   userId: '1',

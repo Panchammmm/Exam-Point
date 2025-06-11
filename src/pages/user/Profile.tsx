@@ -19,28 +19,28 @@ const Profile: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const loadSubmissions = async () => {
+      if (!user) return;
+
+      try {
+        const userSubmissions = await examService.getUserSubmissions(user.id);
+        setSubmissions(userSubmissions.sort((a, b) =>
+          new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
+        ));
+      } catch (error) {
+        console.error('Error loading submissions:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load exam history. Please try again.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     loadSubmissions();
-  }, [user]);
-
-  const loadSubmissions = async () => {
-    if (!user) return;
-
-    try {
-      const userSubmissions = await examService.getUserSubmissions(user.id);
-      setSubmissions(userSubmissions.sort((a, b) =>
-      new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
-      ));
-    } catch (error) {
-      console.error('Error loading submissions:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load exam history. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [user, toast]);
 
   const getScoreBadgeVariant = (score: number) => {
     if (score >= 90) return 'default'; // Green

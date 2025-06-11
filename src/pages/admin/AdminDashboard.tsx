@@ -26,16 +26,12 @@ const AdminDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    loadDashboardData();
-  }, []);
-
-  const loadDashboardData = async () => {
+  const loadDashboardData = React.useCallback(async () => {
     try {
       const [allExams, allSubmissions] = await Promise.all([
-      examService.getAllExams(),
-      examService.getAllSubmissions()]
-      );
+        examService.getAllExams(),
+        examService.getAllSubmissions()
+      ]);
 
       setExams(allExams);
       setSubmissions(allSubmissions);
@@ -49,7 +45,11 @@ const AdminDashboard: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    loadDashboardData();
+  }, [loadDashboardData]);
 
   const getStats = () => {
     const publishedExams = exams.filter((exam) => exam.isPublished);
