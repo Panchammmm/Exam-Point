@@ -33,8 +33,29 @@ export interface ExamSubmission {
   examTitle: string;
   answers: Record<string, number>;
   score: number;
+  totalMarks: number;
   submittedAt: string;
   timeSpent: number;
+}
+
+export interface StudentRanking {
+  userId: string;
+  userName: string;
+  userEmail: string;
+  totalScore: number;
+  totalExams: number;
+  averageScore: number;
+  rank: number;
+}
+
+export interface ExamRanking {
+  examId: string;
+  examTitle: string;
+  submissions: ExamSubmissionWithRank[];
+}
+
+export interface ExamSubmissionWithRank extends ExamSubmission {
+  rank: number;
 }
 
 export interface AuthState {
