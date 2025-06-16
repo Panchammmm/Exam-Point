@@ -58,10 +58,10 @@ const FileUpload: React.FC<FileUploadProps> = ({ onQuestionsExtracted, onClose }
       return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {// 10MB limit
+    if (file.size > 20 * 1024 * 1024) {  // 20MB limit
       toast({
         title: "File too large",
-        description: "Please upload a file smaller than 10MB",
+        description: "Please upload a file smaller than 20MB",
         variant: "destructive"
       });
       return;
@@ -133,8 +133,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onQuestionsExtracted, onClose }
     // Split by common question patterns
     const questionPatterns = [
     /\n\d+\.\s/g, // 1. Question
-    /\nQ\d+[\.:]\s/gi, // Q1: Question
-    /\nQuestion\s+\d+[\.:]\s/gi // Question 1: 
+    /\nQ\d+[\].:]\s/gi, // Q1: Question
+    /\nQuestion\s+\d+[\].:]\s/gi // Question 1: 
     ];
 
     let questionBlocks: string[] = [];
@@ -167,7 +167,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onQuestionsExtracted, onClose }
       let correctAnswer = '';
 
       // Look for options (A), B), a., etc.
-      const optionPattern = /^[A-Da-d][\.)]\s*/;
+      const optionPattern = /^[A-Da-d][\].)]\s*/;
 
       for (let i = 1; i < lines.length; i++) {
         const line = lines[i];
@@ -257,8 +257,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onQuestionsExtracted, onClose }
               type="file"
               accept=".pdf,.docx,.doc"
               onChange={handleFileInput}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" data-id="bspkkc7lg" data-path="src/components/FileUpload.tsx" />
-
+              className="absolute w-[40%] h-[30%] mb-4 opacity-0 cursor-pointer" data-id="bspkkc7lg" data-path="src/components/FileUpload.tsx" />
             </div>
           </div> :
 
