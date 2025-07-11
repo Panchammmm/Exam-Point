@@ -59,6 +59,41 @@ const ExamPage: React.FC = () => {
     loadExam();
   }, [id, navigate, toast]);
 
+  const handleSubmitExam = useCallback(async (autoSubmit = false) => {
+    if (!exam || !user || isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const timeSpent = Math.round((Date.now() - examStartTime) / 1000 / 60); // Convert to minutes
+
+      const submission = await examService.submitExam(
+        exam.id,
+        user.id,
+        user.email,
+        user.name,
+        answers,
+        timeSpent
+      );
+
+      toast({
+        title: autoSubmit ? "Time's up!" : "Exam submitted successfully!",
+        description: `Your score: ${submission.score}/${submission.totalMarks} marks`
+      });
+
+      navigate('/profile');
+    } catch (error) {
+      console.error('Error submitting exam:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit exam. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [exam, user, answers, examStartTime, navigate, toast, isSubmitting]);
+
   // Timer countdown
   useEffect(() => {
     if (timeLeft <= 0 || !exam) return;
@@ -75,7 +110,7 @@ const ExamPage: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, exam]);
+  }, [timeLeft, exam, handleSubmitExam]);
 
   const handleAnswerChange = (questionId: string, answerIndex: number) => {
     setAnswers((prev) => ({
@@ -113,41 +148,6 @@ const ExamPage: React.FC = () => {
     }
   };
 
-  const handleSubmitExam = useCallback(async (autoSubmit = false) => {
-    if (!exam || !user || isSubmitting) return;
-
-    setIsSubmitting(true);
-
-    try {
-      const timeSpent = Math.round((Date.now() - examStartTime) / 1000 / 60); // Convert to minutes
-
-      const submission = await examService.submitExam(
-        exam.id,
-        user.id,
-        user.email,
-        user.name,
-        answers,
-        timeSpent
-      );
-
-      toast({
-        title: autoSubmit ? "Time's up!" : "Exam submitted successfully!",
-        description: `Your score: ${submission.score}/${submission.totalMarks} marks`
-      });
-
-      navigate('/profile');
-    } catch (error) {
-      console.error('Error submitting exam:', error);
-      toast({
-        title: "Error",
-        description: "Failed to submit exam. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [exam, user, answers, examStartTime, navigate, toast, isSubmitting]);
-
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor(seconds % 3600 / 60);
@@ -179,18 +179,18 @@ const ExamPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center" data-id="xokr4o0xm" data-path="src/pages/user/ExamPage.tsx">
-        <LoadingSpinner size="lg" text="Loading exam..." data-id="i8m3bl8o4" data-path="src/pages/user/ExamPage.tsx" />
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center" data-id="g5fa3xv0e" data-path="src/pages/user/ExamPage.tsx">
+        <LoadingSpinner size="lg" text="Loading exam..." data-id="qabsw4uc4" data-path="src/pages/user/ExamPage.tsx" />
       </div>);
 
   }
 
   if (!exam) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center" data-id="ugkwg1mpg" data-path="src/pages/user/ExamPage.tsx">
-        <div className="text-center" data-id="re51e26il" data-path="src/pages/user/ExamPage.tsx">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2" data-id="jfi1zseog" data-path="src/pages/user/ExamPage.tsx">Exam not found</h1>
-          <Button onClick={() => navigate('/dashboard')} data-id="g4frvzhb0" data-path="src/pages/user/ExamPage.tsx">Back to Dashboard</Button>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center" data-id="ulytl9fcl" data-path="src/pages/user/ExamPage.tsx">
+        <div className="text-center" data-id="u8b1jtwjz" data-path="src/pages/user/ExamPage.tsx">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2" data-id="rblr4essa" data-path="src/pages/user/ExamPage.tsx">Exam not found</h1>
+          <Button onClick={() => navigate('/dashboard')} data-id="da2h9jvr5" data-path="src/pages/user/ExamPage.tsx">Back to Dashboard</Button>
         </div>
       </div>);
 
@@ -200,47 +200,47 @@ const ExamPage: React.FC = () => {
   const answeredQuestions = getAnsweredQuestions();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4" data-id="bevxqkcw5" data-path="src/pages/user/ExamPage.tsx">
-      <div className="max-w-7xl mx-auto" data-id="se7ldlq94" data-path="src/pages/user/ExamPage.tsx">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6" data-id="4ouk5mg1r" data-path="src/pages/user/ExamPage.tsx">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4" data-id="yg5dfyhz0" data-path="src/pages/user/ExamPage.tsx">
+      <div className="max-w-7xl mx-auto" data-id="ijrcwzahg" data-path="src/pages/user/ExamPage.tsx">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6" data-id="9vifi0fnp" data-path="src/pages/user/ExamPage.tsx">
           {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6" data-id="dlk7wuj41" data-path="src/pages/user/ExamPage.tsx">
+          <div className="lg:col-span-3 space-y-6" data-id="l2sqtio0b" data-path="src/pages/user/ExamPage.tsx">
             {/* Header */}
-            <div className="bg-white rounded-lg shadow-md p-6" data-id="2m2hd9jzj" data-path="src/pages/user/ExamPage.tsx">
-              <div className="flex justify-between items-center" data-id="f2d5t6per" data-path="src/pages/user/ExamPage.tsx">
-                <div data-id="041q7mqd9" data-path="src/pages/user/ExamPage.tsx">
-                  <h1 className="text-2xl font-bold text-gray-900 flex items-center" data-id="6sn2o4p2c" data-path="src/pages/user/ExamPage.tsx">
-                    <BookOpen className="w-6 h-6 mr-2 text-indigo-600" data-id="v347fhvxk" data-path="src/pages/user/ExamPage.tsx" />
+            <div className="bg-white rounded-lg shadow-md p-6" data-id="3my8deqr6" data-path="src/pages/user/ExamPage.tsx">
+              <div className="flex justify-between items-center" data-id="atj04ufqt" data-path="src/pages/user/ExamPage.tsx">
+                <div data-id="o703d3k3v" data-path="src/pages/user/ExamPage.tsx">
+                  <h1 className="text-2xl font-bold text-gray-900 flex items-center" data-id="id47umerh" data-path="src/pages/user/ExamPage.tsx">
+                    <BookOpen className="w-6 h-6 mr-2 text-indigo-600" data-id="bcxr95wv8" data-path="src/pages/user/ExamPage.tsx" />
                     {exam.title}
                   </h1>
-                  <p className="text-gray-600 mt-1" data-id="q2zmevqub" data-path="src/pages/user/ExamPage.tsx">
+                  <p className="text-gray-600 mt-1" data-id="2zpf6xqlb" data-path="src/pages/user/ExamPage.tsx">
                     Question {currentQuestionIndex + 1} of {exam.questions.length}
                   </p>
                 </div>
-                <div className="text-right" data-id="ru3d44kl6" data-path="src/pages/user/ExamPage.tsx">
-                  <div className={`text-2xl font-bold ${isTimeRunningOut ? 'text-red-600' : 'text-indigo-600'}`} data-id="s93g23zct" data-path="src/pages/user/ExamPage.tsx">
-                    <Clock className="w-5 h-5 inline mr-1" data-id="uz5qf8x85" data-path="src/pages/user/ExamPage.tsx" />
+                <div className="text-right" data-id="ziv1w72xu" data-path="src/pages/user/ExamPage.tsx">
+                  <div className={`text-2xl font-bold ${isTimeRunningOut ? 'text-red-600' : 'text-indigo-600'}`} data-id="dc279fkxy" data-path="src/pages/user/ExamPage.tsx">
+                    <Clock className="w-5 h-5 inline mr-1" data-id="loorsqcre" data-path="src/pages/user/ExamPage.tsx" />
                     {formatTime(timeLeft)}
                   </div>
                   {isTimeRunningOut &&
-                  <p className="text-red-500 text-sm mt-1" data-id="rkr3wc7w0" data-path="src/pages/user/ExamPage.tsx">Time running out!</p>
+                  <p className="text-red-500 text-sm mt-1" data-id="5b06ruvpb" data-path="src/pages/user/ExamPage.tsx">Time running out!</p>
                   }
                 </div>
               </div>
               
               {/* Progress bar */}
-              <div className="mt-4" data-id="ag5m3o4at" data-path="src/pages/user/ExamPage.tsx">
-                <Progress value={getProgress()} className="h-2" data-id="d212f4jeu" data-path="src/pages/user/ExamPage.tsx" />
+              <div className="mt-4" data-id="96lfn12lz" data-path="src/pages/user/ExamPage.tsx">
+                <Progress value={getProgress()} className="h-2" data-id="eoj56gx44" data-path="src/pages/user/ExamPage.tsx" />
               </div>
 
               {/* Mobile Navigation Toggle */}
-              <div className="lg:hidden mt-4" data-id="n0ahh7vf1" data-path="src/pages/user/ExamPage.tsx">
+              <div className="lg:hidden mt-4" data-id="zqx0w3ndh" data-path="src/pages/user/ExamPage.tsx">
                 <Button
                   variant="outline"
                   onClick={() => setShowNavigationPanel(!showNavigationPanel)}
-                  className="w-full" data-id="k83rs22f8" data-path="src/pages/user/ExamPage.tsx">
+                  className="w-full" data-id="xhjrogmju" data-path="src/pages/user/ExamPage.tsx">
 
-                  {showNavigationPanel ? <X className="w-4 h-4 mr-2" data-id="xs6xprf13" data-path="src/pages/user/ExamPage.tsx" /> : <Menu className="w-4 h-4 mr-2" data-id="bcheq8vc3" data-path="src/pages/user/ExamPage.tsx" />}
+                  {showNavigationPanel ? <X className="w-4 h-4 mr-2" data-id="9cc7p8mmg" data-path="src/pages/user/ExamPage.tsx" /> : <Menu className="w-4 h-4 mr-2" data-id="ka9mwe9zg" data-path="src/pages/user/ExamPage.tsx" />}
                   {showNavigationPanel ? 'Hide' : 'Show'} Question Navigation
                 </Button>
               </div>
@@ -248,7 +248,7 @@ const ExamPage: React.FC = () => {
 
             {/* Mobile Navigation Panel */}
             {showNavigationPanel &&
-            <div className="lg:hidden" data-id="24g7hiog7" data-path="src/pages/user/ExamPage.tsx">
+            <div className="lg:hidden" data-id="jyhzbqddj" data-path="src/pages/user/ExamPage.tsx">
                 <QuestionNavigationPanel
                 totalQuestions={exam.questions.length}
                 currentQuestionIndex={currentQuestionIndex}
@@ -259,27 +259,27 @@ const ExamPage: React.FC = () => {
                 onPrevious={handlePreviousQuestion}
                 onNext={handleNextQuestion}
                 isFirstQuestion={currentQuestionIndex === 0}
-                isLastQuestion={currentQuestionIndex === exam.questions.length - 1} data-id="5cjmjkq50" data-path="src/pages/user/ExamPage.tsx" />
+                isLastQuestion={currentQuestionIndex === exam.questions.length - 1} data-id="s3pr0un8q" data-path="src/pages/user/ExamPage.tsx" />
 
               </div>
             }
 
             {/* Question Card */}
-            <Card data-id="v0e393ptw" data-path="src/pages/user/ExamPage.tsx">
-              <CardHeader data-id="mdpy82x5j" data-path="src/pages/user/ExamPage.tsx">
-                <CardTitle className="text-lg" data-id="0bx8vp3zu" data-path="src/pages/user/ExamPage.tsx">
+            <Card data-id="6hnlthxcr" data-path="src/pages/user/ExamPage.tsx">
+              <CardHeader data-id="63gpqz2sm" data-path="src/pages/user/ExamPage.tsx">
+                <CardTitle className="text-lg" data-id="21ekpfpyn" data-path="src/pages/user/ExamPage.tsx">
                   {currentQuestion.text}
                 </CardTitle>
               </CardHeader>
-              <CardContent data-id="dqthosm2t" data-path="src/pages/user/ExamPage.tsx">
+              <CardContent data-id="sqlywggyq" data-path="src/pages/user/ExamPage.tsx">
                 <RadioGroup
                   value={answers[currentQuestion.id]?.toString() || ''}
-                  onValueChange={(value) => handleAnswerChange(currentQuestion.id, parseInt(value))} data-id="sa8dwvtrk" data-path="src/pages/user/ExamPage.tsx">
+                  onValueChange={(value) => handleAnswerChange(currentQuestion.id, parseInt(value))} data-id="u4es4nrj4" data-path="src/pages/user/ExamPage.tsx">
 
                   {currentQuestion.options.map((option, index) =>
-                  <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-50" data-id="v0xtjwmfm" data-path="src/pages/user/ExamPage.tsx">
-                      <RadioGroupItem value={index.toString()} id={`option-${index}`} data-id="kijoghm1m" data-path="src/pages/user/ExamPage.tsx" />
-                      <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer" data-id="fsqb6ecx2" data-path="src/pages/user/ExamPage.tsx">
+                  <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-50" data-id="rleu2lrfp" data-path="src/pages/user/ExamPage.tsx">
+                      <RadioGroupItem value={index.toString()} id={`option-${index}`} data-id="w9xi7xsxr" data-path="src/pages/user/ExamPage.tsx" />
+                      <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer" data-id="kidqg8jv8" data-path="src/pages/user/ExamPage.tsx">
                         {option}
                       </Label>
                     </div>
@@ -289,27 +289,27 @@ const ExamPage: React.FC = () => {
             </Card>
 
             {/* Bottom Navigation */}
-            <div className="flex justify-between items-center" data-id="htvy6tyho" data-path="src/pages/user/ExamPage.tsx">
+            <div className="flex justify-between items-center" data-id="lqkjoxemv" data-path="src/pages/user/ExamPage.tsx">
               <Button
                 variant="outline"
                 onClick={handlePreviousQuestion}
-                disabled={currentQuestionIndex === 0} data-id="121k7s7fk" data-path="src/pages/user/ExamPage.tsx">
+                disabled={currentQuestionIndex === 0} data-id="3gz6wcsgg" data-path="src/pages/user/ExamPage.tsx">
 
                 Previous
               </Button>
 
-              <div className="flex space-x-2" data-id="op1ob8vhb" data-path="src/pages/user/ExamPage.tsx">
+              <div className="flex space-x-2" data-id="a9hcn2cai" data-path="src/pages/user/ExamPage.tsx">
                 {currentQuestionIndex === exam.questions.length - 1 ?
                 <Button
                   onClick={() => setShowSubmitDialog(true)}
                   className="bg-green-600 hover:bg-green-700"
-                  disabled={isSubmitting} data-id="f04n2nqhp" data-path="src/pages/user/ExamPage.tsx">
+                  disabled={isSubmitting} data-id="7lavdf0bd" data-path="src/pages/user/ExamPage.tsx">
 
-                    <CheckCircle className="w-4 h-4 mr-2" data-id="ztlehejnx" data-path="src/pages/user/ExamPage.tsx" />
+                    <CheckCircle className="w-4 h-4 mr-2" data-id="fn5bdslv4" data-path="src/pages/user/ExamPage.tsx" />
                     Submit Exam
                   </Button> :
 
-                <Button onClick={handleNextQuestion} data-id="peecpo7n4" data-path="src/pages/user/ExamPage.tsx">
+                <Button onClick={handleNextQuestion} data-id="dkaizvtlo" data-path="src/pages/user/ExamPage.tsx">
                     Next
                   </Button>
                 }
@@ -318,8 +318,8 @@ const ExamPage: React.FC = () => {
 
             {/* Warning for unanswered questions */}
             {Object.keys(answers).length < exam.questions.length &&
-            <Alert data-id="c4g4qvk4e" data-path="src/pages/user/ExamPage.tsx">
-                <AlertDescription data-id="pagei39o3" data-path="src/pages/user/ExamPage.tsx">
+            <Alert data-id="z44seu31t" data-path="src/pages/user/ExamPage.tsx">
+                <AlertDescription data-id="8v4oklpei" data-path="src/pages/user/ExamPage.tsx">
                   You have {exam.questions.length - Object.keys(answers).length} unanswered questions.
                 </AlertDescription>
               </Alert>
@@ -327,8 +327,8 @@ const ExamPage: React.FC = () => {
           </div>
 
           {/* Desktop Navigation Panel */}
-          <div className="hidden lg:block" data-id="4u76zlefd" data-path="src/pages/user/ExamPage.tsx">
-            <div className="sticky top-4" data-id="1bllapcqc" data-path="src/pages/user/ExamPage.tsx">
+          <div className="hidden lg:block" data-id="2hc2751k6" data-path="src/pages/user/ExamPage.tsx">
+            <div className="sticky top-4" data-id="r3b9109dw" data-path="src/pages/user/ExamPage.tsx">
               <QuestionNavigationPanel
                 totalQuestions={exam.questions.length}
                 currentQuestionIndex={currentQuestionIndex}
@@ -339,39 +339,39 @@ const ExamPage: React.FC = () => {
                 onPrevious={handlePreviousQuestion}
                 onNext={handleNextQuestion}
                 isFirstQuestion={currentQuestionIndex === 0}
-                isLastQuestion={currentQuestionIndex === exam.questions.length - 1} data-id="zezj1pvaa" data-path="src/pages/user/ExamPage.tsx" />
+                isLastQuestion={currentQuestionIndex === exam.questions.length - 1} data-id="jpksvs73e" data-path="src/pages/user/ExamPage.tsx" />
 
             </div>
           </div>
         </div>
 
         {/* Submit Confirmation Dialog */}
-        <AlertDialog open={showSubmitDialog} onOpenChange={setShowSubmitDialog} data-id="in5ebxb7f" data-path="src/pages/user/ExamPage.tsx">
-          <AlertDialogContent data-id="p9e8g64wd" data-path="src/pages/user/ExamPage.tsx">
-            <AlertDialogHeader data-id="68mnro7l6" data-path="src/pages/user/ExamPage.tsx">
-              <AlertDialogTitle data-id="l3m1r6bkl" data-path="src/pages/user/ExamPage.tsx">Submit Exam?</AlertDialogTitle>
-              <AlertDialogDescription data-id="g26pphthe" data-path="src/pages/user/ExamPage.tsx">
+        <AlertDialog open={showSubmitDialog} onOpenChange={setShowSubmitDialog} data-id="kaijscg06" data-path="src/pages/user/ExamPage.tsx">
+          <AlertDialogContent data-id="e7qcphple" data-path="src/pages/user/ExamPage.tsx">
+            <AlertDialogHeader data-id="2jm03ad90" data-path="src/pages/user/ExamPage.tsx">
+              <AlertDialogTitle data-id="co2xwi2gr" data-path="src/pages/user/ExamPage.tsx">Submit Exam?</AlertDialogTitle>
+              <AlertDialogDescription data-id="ulu73pc0z" data-path="src/pages/user/ExamPage.tsx">
                 Are you sure you want to submit your exam? You cannot change your answers after submission.
-                <br data-id="xd8v3plpd" data-path="src/pages/user/ExamPage.tsx" /><br data-id="xr2jzo5l8" data-path="src/pages/user/ExamPage.tsx" />
+                <br data-id="yjpyvi4nq" data-path="src/pages/user/ExamPage.tsx" /><br data-id="exsudgw9i" data-path="src/pages/user/ExamPage.tsx" />
                 Answered questions: {Object.keys(answers).length} of {exam.questions.length}
-                <br data-id="aqcwm4gg1" data-path="src/pages/user/ExamPage.tsx" />
+                <br data-id="9009zhs5u" data-path="src/pages/user/ExamPage.tsx" />
                 Marked for later: {markedForLater.size} questions
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter data-id="6s0xeq63v" data-path="src/pages/user/ExamPage.tsx">
+            <AlertDialogFooter data-id="fdtxlumh5" data-path="src/pages/user/ExamPage.tsx">
               <Button
                 variant="outline"
                 onClick={() => setShowSubmitDialog(false)}
-                disabled={isSubmitting} data-id="flbf3vo0x" data-path="src/pages/user/ExamPage.tsx">
+                disabled={isSubmitting} data-id="19mi4bfbx" data-path="src/pages/user/ExamPage.tsx">
 
                 Cancel
               </Button>
               <AlertDialogAction
                 onClick={() => handleSubmitExam()}
                 disabled={isSubmitting}
-                className="bg-green-600 hover:bg-green-700" data-id="vhi0yyn6l" data-path="src/pages/user/ExamPage.tsx">
+                className="bg-green-600 hover:bg-green-700" data-id="v34o7ig89" data-path="src/pages/user/ExamPage.tsx">
 
-                {isSubmitting ? <LoadingSpinner size="sm" data-id="fh0nzf91u" data-path="src/pages/user/ExamPage.tsx" /> : 'Submit Exam'}
+                {isSubmitting ? <LoadingSpinner size="sm" data-id="bs7n6teak" data-path="src/pages/user/ExamPage.tsx" /> : 'Submit Exam'}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

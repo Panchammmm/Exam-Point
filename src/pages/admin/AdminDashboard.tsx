@@ -31,8 +31,33 @@ const AdminDashboard: React.FC = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    const loadDashboardData = async () => {
+      try {
+        const [allExams, allSubmissions, rankings, examRanks] = await Promise.all([
+          examService.getAllExams(),
+          examService.getAllSubmissions(),
+          examService.getStudentRankings(),
+          examService.getAllExamRankings()
+        ]);
+
+        setExams(allExams);
+        setSubmissions(allSubmissions);
+        setStudentRankings(rankings);
+        setExamRankings(examRanks);
+      } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load dashboard data. Please try again.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     loadDashboardData();
-  }, []);
+  }, [toast]);
 
   const loadDashboardData = async () => {
     try {
