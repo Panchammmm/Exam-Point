@@ -33,7 +33,7 @@ import {
   Target } from
 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { mockDataService } from '../services/mockData.ts';
+import { mockDataService, Exam } from '../services/mockData';
 
 interface ExamSection {
   id: string;
@@ -46,7 +46,7 @@ interface ExamSection {
 
 interface ExamBuilderProps {
   onBack: () => void;
-  editingExam?: any;
+  editingExam?: Exam;
 }
 
 // Mock questions for selection
@@ -242,9 +242,9 @@ const ExamBuilder: React.FC<ExamBuilderProps> = ({ onBack, editingExam }) => {
       };
 
       if (editingExam) {
-        await mockDataService.updateExam(editingExam.id, examData);
+        await mockDataService.updateExam(editingExam.id, examData[any]);
       } else {
-        await mockDataService.createExam(examData);
+        await mockDataService.createExam(examData[any]);
       }
 
       toast({

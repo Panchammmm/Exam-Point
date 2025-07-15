@@ -6,14 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle, XCircle, ArrowLeft, Trophy, Clock, BookOpen } from 'lucide-react';
 import { useAuth } from '../hooks/useMockAuth.tsx';
-import { mockDataService, Exam } from '../services/mockData.ts';
+import { mockDataService, Exam, Submission } from '../services/mockData.ts';
 
 const ExamResults: React.FC = () => {
   const { examId } = useParams<{examId: string;}>();
   const navigate = useNavigate();
   const { user } = useAuth();
   const [exam, setExam] = useState<Exam | null>(null);
-  const [submission, setSubmission] = useState<any>(null);
+  const [submission, setSubmission] = useState<Submission | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

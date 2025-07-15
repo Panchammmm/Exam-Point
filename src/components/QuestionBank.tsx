@@ -470,7 +470,7 @@ const QuestionBank: React.FC<QuestionBankProps> = ({ onBack }) => {
                 <Label data-id="auo2j7b3o" data-path="src/components/QuestionBank.tsx">Difficulty</Label>
                 <Select
                   value={newQuestion.difficulty}
-                  onValueChange={(value) => setNewQuestion({ ...newQuestion, difficulty: value as 'easy' | 'medium' | 'hard' })} data-id="qs5aeikyo" data-path="src/components/QuestionBank.tsx">
+                  onValueChange={(value) => setNewQuestion({ ...newQuestion, difficulty: value as any })} data-id="qs5aeikyo" data-path="src/components/QuestionBank.tsx">
 
                   <SelectTrigger data-id="jfqfikygt" data-path="src/components/QuestionBank.tsx">
                     <SelectValue data-id="757fdcmf5" data-path="src/components/QuestionBank.tsx" />

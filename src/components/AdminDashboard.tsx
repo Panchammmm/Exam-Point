@@ -30,10 +30,10 @@ import {
   Filter,
   Undo2,
   Settings,
-  BarChart3
-} from 'lucide-react';
-import { useAuth } from '../hooks/useMockAuth.tsx';
-import { mockDataService, Exam, Question, Ranking } from '../services/mockData.ts';
+  BarChart3 } from
+'lucide-react';
+import { useAuth } from '../hooks/useMockAuth';
+import { mockDataService, Exam, Question, Ranking } from '../services/mockData';
 import { toast } from '@/hooks/use-toast';
 import ExamBuilder from './ExamBuilder';
 import QuestionBank from './QuestionBank';
@@ -57,50 +57,41 @@ const AdminDashboard: React.FC = () => {
   const [difficultyFilter, setDifficultyFilter] = useState('all');
   const [selectedExamForRankings, setSelectedExamForRankings] = useState('all');
 
-  const [newExam, setNewExam] = useState<Partial<Exam>>({
+  const [newExam, setNewExam] = useState({
     name: '',
     description: '',
     timeLimit: 60,
     password: '',
     isPasswordProtected: false,
-    instructions: '',
-    isPublished: false,
-    isDraft: true,
-    totalMarks: 0,
-    sections: [],
-    questions: [],
-    createdAt: new Date(),
-    updatedAt: new Date()
+    instructions: ''
   });
 
-  const [newQuestion, setNewQuestion] = useState<Partial<Question>>({
+  const [newQuestion, setNewQuestion] = useState({
     content: '',
     options: ['', '', '', ''],
     correctOption: 0,
-    difficulty: 'medium',
+    difficulty: 'medium' as 'easy' | 'medium' | 'hard',
     subject: '',
     topic: '',
-    tags: [],
-    createdAt: new Date(),
-    updatedAt: new Date()
+    tags: [] as string[]
   });
 
   useEffect(() => {
     const loadData = async () => {
       try {
         const [examData, questionData, rankingData] = await Promise.all([
-          mockDataService.getAllExams(),
-          mockDataService.getQuestions(),
-          mockDataService.getRankings()
-        ]);
-        setExams(examData || []);
-        setQuestions(questionData || []);
-        setRankings(rankingData || []);
+        mockDataService.getAllExams(),
+        mockDataService.getQuestions(),
+        mockDataService.getRankings()]
+        );
+        setExams(examData);
+        setQuestions(questionData);
+        setRankings(rankingData);
       } catch (error) {
         console.error('Error loading data:', error);
         toast({
           title: 'Error',
-          description: error.message || 'Failed to load data',
+          description: 'Failed to load data',
           variant: 'destructive'
         });
       } finally {
@@ -112,101 +103,63 @@ const AdminDashboard: React.FC = () => {
   }, []);
 
   const handleCreateExam = async () => {
-  try {
-    if (!newExam.name.trim()) {
+    try {
+      const createdExam = await mockDataService.createExam(newExam);
+      setShowCreateExam(false);
+      setNewExam({
+        name: '',
+        description: '',
+        timeLimit: 60,
+        password: '',
+        isPasswordProtected: false,
+        instructions: ''
+      });
+      toast({
+        title: 'Success',
+        description: 'Exam created successfully'
+      });
+      // Optimistically update the UI
+      setExams([...exams, createdExam]);
+      const examData = await mockDataService.getAllExams();
+      setExams(examData);
+    } catch (error) {
       toast({
         title: 'Error',
-        description: 'Exam name is required',
+        description: 'Failed to create exam',
         variant: 'destructive'
       });
-      return;
     }
-
-    const examData: Partial<Exam> = {
-      ...newExam,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-
-    const createdExam = await mockDataService.createExam(examData);
-    setShowCreateExam(false);
-    setNewExam({
-      name: '',
-      description: '',
-      timeLimit: 60,
-      password: '',
-      isPasswordProtected: false,
-      instructions: '',
-      isPublished: false,
-      isDraft: true,
-      totalMarks: 0,
-      sections: [],
-      createdAt: new Date(),
-      updatedAt: new Date()
-    });
-    toast({
-      title: 'Success',
-      description: 'Exam created successfully'
-    });
-    setExams([...exams, createdExam]);
-    const examData = await mockDataService.getAllExams();
-    setExams(examData);
-  } catch (error) {
-    console.error('Failed to create exam:', error);
-    toast({
-      title: 'Error',
-      description: error.message || 'Failed to create exam',
-      variant: 'destructive'
-    });
-  }
   };
 
   const handleCreateQuestion = async () => {
-  try {
-    if (!newQuestion.content?.trim() || !newQuestion.options?.every((opt) => opt.trim())) {
+    try {
+      const createdQuestion = await mockDataService.createQuestion(newQuestion);
+      setShowCreateQuestion(false);
+      setNewQuestion({
+        content: '',
+        options: ['', '', '', ''],
+        correctOption: 0,
+        difficulty: 'medium',
+        subject: '',
+        topic: '',
+        tags: []
+      });
+      toast({
+        title: 'Success',
+        description: 'Question created successfully'
+      });
+      // Optimistically update the UI
+      setQuestions([...questions, createdQuestion]);
+      const questionData = await mockDataService.getQuestions();
+      setQuestions(questionData);
+    } catch (error) {
       toast({
         title: 'Error',
-        description: 'Question content and all options are required',
+        description: 'Failed to create question',
         variant: 'destructive'
       });
-      return;
     }
-
-    const questionData: Partial<Question> = {
-      ...newQuestion,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-
-    const createdQuestion = await mockDataService.createQuestion(questionData);
-    setShowCreateQuestion(false);
-    setNewQuestion({
-      content: '',
-      options: ['', '', '', ''],
-      correctOption: 0,
-      difficulty: 'medium',
-      subject: '',
-      topic: '',
-      tags: [],
-      createdAt: new Date(),
-      updatedAt: new Date()
-    });
-    toast({
-      title: 'Success',
-      description: 'Question created successfully'
-    });
-    setQuestions([...questions, createdQuestion]);
-    const questionData = await mockDataService.getQuestions();
-    setQuestions(questionData);
-  } catch (error) {
-    console.error('Failed to create question:', error);
-    toast({
-      title: 'Error',
-      description: error.message || 'Failed to create question',
-      variant: 'destructive'
-    });
-  }
-};
+  };
 
   const handleTogglePublish = async (examId: string, isPublished: boolean) => {
     try {

@@ -466,7 +466,7 @@ const EnhancedQuestionBank: React.FC<EnhancedQuestionBankProps> = ({
                       </SelectContent>
                     </Select>
 
-                    <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)} data-id="bg01i6877" data-path="src/components/EnhancedQuestionBank.tsx">
+                    <Select value={sortBy} onValueChange={(value: typeof sortBy) => setSortBy(value)} data-id="bg01i6877" data-path="src/components/EnhancedQuestionBank.tsx">
                       <SelectTrigger data-id="y3l8buaj2" data-path="src/components/EnhancedQuestionBank.tsx">
                         <SelectValue placeholder="Sort by" data-id="vbapatog7" data-path="src/components/EnhancedQuestionBank.tsx" />
                       </SelectTrigger>
