@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -14,29 +14,29 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background" data-id="ch581d68n" data-path="src/pages/NotFound.tsx">
+    <div className="min-h-screen flex items-center justify-center bg-background" data-id="ffevsq1b1" data-path="src/pages/NotFound.tsx">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center space-y-6 p-8" data-id="5ryku0baj" data-path="src/pages/NotFound.tsx">
+        className="text-center space-y-6 p-8" data-id="uv72l8344" data-path="src/pages/NotFound.tsx">
 
         <motion.div
           initial={{ scale: 0.5 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }} data-id="81vaytyo6" data-path="src/pages/NotFound.tsx">
+          transition={{ duration: 0.5, delay: 0.2 }} data-id="iod31v9sn" data-path="src/pages/NotFound.tsx">
 
-          <h1 className="text-8xl font-bold text-primary" data-id="6xn0qbajv" data-path="src/pages/NotFound.tsx">404</h1>
+          <h1 className="text-8xl font-bold text-primary" data-id="vxef244em" data-path="src/pages/NotFound.tsx">404</h1>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="space-y-4" data-id="hgyf953iu" data-path="src/pages/NotFound.tsx">
+          className="space-y-4" data-id="1ajnbntk5" data-path="src/pages/NotFound.tsx">
 
-          <h2 className="text-2xl font-semibold tracking-tight" data-id="3ls1rnhik" data-path="src/pages/NotFound.tsx">Page Not Found</h2>
-          <p className="text-muted-foreground" data-id="y1fw6imgn" data-path="src/pages/NotFound.tsx">
+          <h2 className="text-2xl font-semibold tracking-tight" data-id="pamc5efet" data-path="src/pages/NotFound.tsx">Page Not Found</h2>
+          <p className="text-muted-foreground" data-id="rt8p1j29q" data-path="src/pages/NotFound.tsx">
             Sorry, the page you are looking for does not exist or has been removed.
           </p>
         </motion.div>
@@ -44,10 +44,10 @@ const NotFound = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }} data-id="4xuwqk035" data-path="src/pages/NotFound.tsx">
+          transition={{ duration: 0.5, delay: 0.6 }} data-id="7objctfy1" data-path="src/pages/NotFound.tsx">
 
-          <Button asChild variant="default" size="lg" data-id="tt44ejqtj" data-path="src/pages/NotFound.tsx">
-            <a href="/" data-id="3f46563zy" data-path="src/pages/NotFound.tsx">Back to Home</a>
+          <Button asChild variant="default" size="lg" data-id="bupya3nbq" data-path="src/pages/NotFound.tsx">
+            <a href="/" data-id="7a24x863e" data-path="src/pages/NotFound.tsx">Back to Home</a>
           </Button>
         </motion.div>
       </motion.div>
